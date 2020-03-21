@@ -5,3 +5,8 @@
   .list_color .webix_selected{
     background-color: #dddfe2;
   }
+body{
+    margin: 0;
+    padding: 0;
+    font-family: 'Gudea', sans-serif;
+}

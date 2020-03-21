@@ -21,7 +21,9 @@ webix.ready(function () {
                 {height: 40, type:"icon", icon:"wxi-user",  view:"button", label:"Profile", width:100, css:"webix_transparent"}
             ]},
             //!MAIN
-            {cols:[
+            {animate:true, cells:[{
+                id:'data',
+                cols:[
                 { view: "list",
                 id:"mylist",
                 scroll:false,
@@ -53,8 +55,9 @@ webix.ready(function () {
                     }
                     ] },
                 {view: "resizer"},
-
+                
                 {view:"form", id: "user_form",select:true,elements:[
+                    { template:"User", type:"section"},
                     { view:"text",name:"name",  label:"Name" },
                     { view:"text",name:"username",  label:"Username" },
                     { view:"text",name:"email",  label:"Email" },
@@ -67,115 +70,39 @@ webix.ready(function () {
                     ]},
                 ]}
             ]},
+            {
+                id:"settings", view:"form",
+                rows:[
+                  { template:"Settings", type:"section"},
+                  { view:"label", label:"Choose the language" },
+                  {
+                    view:"segmented", inputWidth:200, options:[
+                      { id:"ru", value:"Russia" },
+                      { id:"en", value:"English" }
+                    ], on:{
+                      onChange(value, old){
+                        webix.message("Option: " + value);
+                      }
+                    }
+                  },
+                  {}
+                ]
+              },{
+                view:"calendar",
+                id:"home",
+                date:new Date(2012,3,16),
+                weekHeader:true,
+                events:webix.Date.isHoliday,
+                width:300,
+                height:250
+            }]},
+
             //! FOOTER
             {template:"Footer"}
         ]
     });
 });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    //         {
-    //             view:"tabbar", multiview:true, value:"data", options:[
-    //                 { id:"home", value:"Home" },
-    //                 { id:"data", value:"Data" },
-    //                 { id:"settings", value:"Settings" }
-    //             ]
-    //         },
-    //         {
-    //             animate:true, cells:[{
-    //                 id:"home",
-    //                 rows:[{
-    //                     view:"forminput",
-    //                     name:"access",
-    //                     labelWidth: 140,
-    //                     labelAlign:"right",
-    //                     label:"Access levels"
-    //                 }
-
-    //                 ]
-    //             },
-    //                 {
-    //                     id:'data',
-    //                     rows: [
-    //                         { view:"toolbar",
-    //                         id:"top_toolbar",
-    //                         elements:[
-    //                             { view:"button", id:"btn_save", autowidth:true, value:"Save",click:saveItem},
-    //                             { view:"button", id:"btn_del", autowidth:true, value:"Delete",click:deleteItem},
-    //                             { view:"button", id:"btn_clear", autowidth:true, value:"Clear",click: clearForm}
-    //                         ]},
-    //                         {cols :[{
-    //                                 view:"form", id: "user_form",select:true,
-    //                                 elements:[
-    //                                     { view:"text",name:"name",  label:"Name" },
-    //                                     { view:"text",name:"username",  label:"Username" },
-    //                                     { view:"text",name:"email",  label:"Email" },
-    //                                     { view:"text",name:"phone",  label:"phone" },
-    //                                     { view:"text",name:"website",  label:"website" },
-    //                                 ]}, {}]},
-    //                         { cols : [
-    //                                 //! Сделать фильтр
-    //                                 // {}, = спейсер
-    //                                 // Размеры width:80 height: 90, autoheight:true,  minWidth:150
-    //                                 { view : "datatable" ,columns:[
-    //                                         {id:'id',header:"id",width:35},
-    //                                         {id:'name',header:"Name",width: 200,fillspace:true, sort:"string"},
-    //                                         {id:'username',header:"Username",fillspace:true,sort:"string",width: 150},
-    //                                         {id:'email',header:"Email",fillspace:true,width:250},
-    //                                         {id:'phone',header:"Phone",width:180},
-    //                                         {id:'website',header:"Website",width:180},
-    //                                     ],css:"webix_data_border webix_header_border", id : "mydatatable" ,scrollX:false,on:{onAfterSelect:valuesToForm},select:true, autoConfig : true , data: grid_data,pager:"pager",}
-    //                             ] },{
-    //                             view:"pager",
-    //                             id:"pager",
-    //                             size:15,
-    //                             group:3,
-    //                             template:"{common.first()}{common.prev()}{common.pages()}{common.next()}{common.last()}"
-    //                         },]
-    //                 },
-    //                 {
-    //                     id:"settings", view:"form",
-    //                     rows:[
-    //                         { template:"Settings", type:"section" },
-    //                         { view:"label", label:"Choose the language" },
-    //                         {
-    //                             view:"segmented", inputWidth:200, options:[
-    //                                 { id:"en", value:"English" },
-    //                                 { id:"ru", value:"Russian" }
-    //                             ], on:{
-    //                                 onChange(value, old){
-    //                                     webix.message("Option: " + value);
-    //                                 }
-    //                             }
-    //                         }]
-    //                 }
-    //             ]
-    //         }
-    //     ]
-    // });
 //Data
 let grid_data = fetch('https://jsonplaceholder.typicode.com/users')
     .then(responce => responce.json());
