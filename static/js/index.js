@@ -1,5 +1,19 @@
 'use strict'
+//Data
 
+let grid_data = fetch('https://jsonplaceholder.typicode.com/users')
+    .then(responce => responce.json());
+const base = {
+    event: "save",
+    to_save: {
+        fname: "Olesya",
+        lname: "Hueva",
+        date_burn: "22.02.1999",
+        secret_level: 3,
+        password: "password",
+    }
+};
+// 
 webix.ready(function () {
     webix.ui({
         type:"line",
@@ -11,14 +25,15 @@ webix.ready(function () {
             {view:"toolbar",
             cols:[
                 { view:"label", label:"logo"},
-
                 {view:"tabbar",css:"webix_transparent", multiview:true, value:"data", options:[
                         { id:"home", value:"Home" },
                         { id:"data", value:"Data" },
                         { id:"settings", value:"Settings" }
                     ]},
                 {},
-                {height: 40, type:"icon", icon:"wxi-user",  view:"button", label:"Profile", width:100, css:"webix_transparent"}
+                {height: 40, type:"icon", icon:"wxi-user",  view:"button", label:"Profile", width:100, css:"webix_transparent", click:function (){
+                    alert('hello')
+                }}
             ]},
             //!MAIN
             {animate:true, cells:[{
@@ -103,17 +118,7 @@ webix.ready(function () {
     });
 });
 
-//Data
-let grid_data = fetch('https://jsonplaceholder.typicode.com/users')
-    .then(responce => responce.json());
 
-console.log(grid_data);
-let tree_data = [
-    {   id : "1" ,
-        type : "folder",
-        value : "Music" ,
-        css : "folder_music" }
-];
 
 //function
 
